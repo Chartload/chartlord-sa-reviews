@@ -60,7 +60,7 @@ const TrustPilotReviews = () => {
     "Skeptics", "Beginners", "Education"
   ];
 
-  // Reviews data - South African users with image URLs
+  // Reviews data - South African users with local image paths
   const initialReviews = [
     {
       id: 1,
@@ -74,7 +74,7 @@ const TrustPilotReviews = () => {
       dislikes: 2,
       verified: true,
       categories: ["Forex Trading", "Automated"],
-      imageUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+      imageUrl: "/images/reviewers/reviewer-1.jpg",
       readTime: "4 min read",
       comments: 12
     },
@@ -90,7 +90,7 @@ const TrustPilotReviews = () => {
       dislikes: 1,
       verified: true,
       categories: ["Beginner Friendly", "Support"],
-      imageUrl: "https://randomuser.me/api/portraits/women/44.jpg",
+      imageUrl: "/images/reviewers/reviewer-2.jpg",
       readTime: "3 min read",
       comments: 8
     },
@@ -106,7 +106,7 @@ const TrustPilotReviews = () => {
       dislikes: 3,
       verified: true,
       categories: ["Learning Curve"],
-      imageUrl: "https://randomuser.me/api/portraits/men/75.jpg",
+      imageUrl: "/images/reviewers/reviewer-3.jpg",
       readTime: "5 min read",
       comments: 15
     },
@@ -122,7 +122,7 @@ const TrustPilotReviews = () => {
       dislikes: 0,
       verified: true,
       categories: ["Passive Income", "Professionals"],
-      imageUrl: "https://randomuser.me/api/portraits/women/68.jpg",
+      imageUrl: "/images/reviewers/reviewer-4.jpg",
       readTime: "4 min read",
       comments: 21
     },
@@ -138,7 +138,7 @@ const TrustPilotReviews = () => {
       dislikes: 8,
       verified: true,
       categories: ["Risk Management"],
-      imageUrl: "https://randomuser.me/api/portraits/men/22.jpg",
+      imageUrl: "/images/reviewers/reviewer-5.jpg",
       readTime: "4 min read",
       comments: 9
     },
@@ -154,7 +154,7 @@ const TrustPilotReviews = () => {
       dislikes: 1,
       verified: true,
       categories: ["Life Changing", "Parents"],
-      imageUrl: "https://randomuser.me/api/portraits/women/90.jpg",
+      imageUrl: "/images/reviewers/reviewer-6.jpg",
       readTime: "3 min read",
       comments: 32
     },
@@ -170,13 +170,61 @@ const TrustPilotReviews = () => {
       dislikes: 2,
       verified: true,
       categories: ["Experienced Traders"],
-      imageUrl: "https://randomuser.me/api/portraits/men/52.jpg",
+      imageUrl: "/images/reviewers/reviewer-7.jpg",
       readTime: "5 min read",
       comments: 14
+    },
+    {
+      id: 8,
+      name: "Zanele Khumalo",
+      location: "Pietermaritzburg, KZN",
+      date: "5 February 2026",
+      rating: 5,
+      title: "Finally financial independence",
+      content: "I was struggling to make ends meet as a single mother. ChartLord AI has given me a second income stream. I'm not rich but I can now afford extras for my kids. Thank you to the team for creating this.",
+      likes: 64,
+      dislikes: 0,
+      verified: true,
+      categories: ["Single Parents", "Financial Freedom"],
+      imageUrl: "/images/reviewers/reviewer-8.jpg",
+      readTime: "3 min read",
+      comments: 28
+    },
+    {
+      id: 9,
+      name: "Bongani Dube",
+      location: "Richards Bay, KZN",
+      date: "1 February 2026",
+      rating: 4,
+      title: "Good returns, support could be faster",
+      content: "The software works well, returns are consistent. Only issue is customer support sometimes takes 24+ hours to respond. But when they do, they're helpful. Would still recommend.",
+      likes: 18,
+      dislikes: 4,
+      verified: true,
+      categories: ["Customer Support"],
+      imageUrl: "/images/reviewers/reviewer-9.jpg",
+      readTime: "4 min read",
+      comments: 9
+    },
+    {
+      id: 10,
+      name: "Nosipho Mthembu",
+      location: "Newcastle, KZN",
+      date: "20 January 2026",
+      rating: 5,
+      title: "From skeptic to believer",
+      content: "My brother recommended this to me. I thought it was another scheme. Three months later, I'm eating my words. My R2,000 is now R4,500. I'm converted.",
+      likes: 37,
+      dislikes: 2,
+      verified: true,
+      categories: ["Skeptics", "Beginners"],
+      imageUrl: "/images/reviewers/reviewer-10.jpg",
+      readTime: "3 min read",
+      comments: 11
     }
   ];
 
-  // Load data from localStorage on initial render - FIXED DEPENDENCY
+  // Load data from localStorage on initial render
   useEffect(() => {
     // Load saved reviews
     const savedReviews = localStorage.getItem('chartlord-sa-reviews');
@@ -210,7 +258,7 @@ const TrustPilotReviews = () => {
       setSavedArticles(JSON.parse(savedArticlesData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // initialReviews is stable, no need to include
+  }, []);
 
   // Save to localStorage when interactions change
   useEffect(() => {
@@ -235,7 +283,7 @@ const TrustPilotReviews = () => {
     localStorage.setItem('chartlord-sa-saved', JSON.stringify(savedArticles));
   }, [savedArticles]);
 
-  // Handle like button click - wrapped in useCallback for stability
+  // Handle like button click
   const handleLike = useCallback((reviewId) => {
     setReviews(prevReviews => {
       const updatedReviews = prevReviews.map(review => {
@@ -279,7 +327,7 @@ const TrustPilotReviews = () => {
     });
   }, [likedReviews, dislikedReviews]);
 
-  // Handle dislike button click - wrapped in useCallback
+  // Handle dislike button click
   const handleDislike = useCallback((reviewId) => {
     setReviews(prevReviews => {
       const updatedReviews = prevReviews.map(review => {
@@ -374,6 +422,7 @@ const TrustPilotReviews = () => {
       dislikes: 0,
       verified: false,
       categories: newReview.categories,
+      // For new reviews, use a placeholder avatar
       imageUrl: `https://ui-avatars.com/api/?name=${newReview.name.replace(' ', '+')}&background=00b67a&color=fff&size=100`,
       readTime: `${Math.ceil(newReview.content.split(' ').length / 200)} min read`,
       comments: 0
@@ -538,7 +587,7 @@ const TrustPilotReviews = () => {
               </div>
             </div>
             
-            {/* Navigation Tabs - FIXED: Changed anchors to buttons with proper roles */}
+            {/* Navigation Tabs */}
             <nav className="news-nav">
               <button className="nav-link active" onClick={() => {}}>Latest News</button>
               <button className="nav-link" onClick={() => {}}>Success Stories</button>
@@ -660,6 +709,7 @@ const TrustPilotReviews = () => {
                             <img 
                               src={review.imageUrl} 
                               alt={review.name}
+                              // Fallback to UI Avatars if local image fails
                               onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src = `https://ui-avatars.com/api/?name=${review.name.replace(' ', '+')}&background=00b67a&color=fff&size=100`;
@@ -1020,7 +1070,7 @@ const TrustPilotReviews = () => {
           </div>
         )}
 
-        {/* Footer - FIXED: Changed anchor tags that don't navigate to buttons where appropriate */}
+        {/* Footer */}
         <footer className="news-footer">
           <div className="container">
             <div className="footer-content">
