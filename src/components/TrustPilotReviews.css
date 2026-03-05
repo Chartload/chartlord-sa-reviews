@@ -121,6 +121,7 @@ body {
   border-radius: 30px;
   font-weight: 600;
   transition: all 0.3s;
+  display: inline-block;
 }
 
 .cta-button-header:hover {
@@ -128,27 +129,36 @@ body {
   transform: translateY(-2px);
 }
 
-/* Navigation Tabs */
+/* Navigation Tabs - Updated for button elements */
 .news-nav {
   display: flex;
   gap: 25px;
   border-bottom: 1px solid #e5e7eb;
   padding-bottom: 10px;
+  flex-wrap: wrap;
 }
 
-.news-nav a {
+.nav-link {
+  background: none;
+  border: none;
   color: #4b5563;
-  text-decoration: none;
   font-weight: 500;
-  padding-bottom: 10px;
+  padding: 0 0 10px 0;
+  cursor: pointer;
+  font-size: 1rem;
   position: relative;
+  transition: color 0.2s;
 }
 
-.news-nav a.active {
+.nav-link:hover {
   color: #00b67a;
 }
 
-.news-nav a.active::after {
+.nav-link.active {
+  color: #00b67a;
+}
+
+.nav-link.active::after {
   content: '';
   position: absolute;
   bottom: -11px;
@@ -330,6 +340,7 @@ body {
   display: flex;
   gap: 12px;
   font-size: 0.85rem;
+  flex-wrap: wrap;
 }
 
 .article-category {
@@ -384,6 +395,7 @@ body {
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid #00b67a;
+  flex-shrink: 0;
 }
 
 .author-avatar img {
@@ -400,11 +412,13 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   color: #1a2639;
+  margin-bottom: 2px;
 }
 
 .author-location {
   font-size: 0.85rem;
   color: #6b7280;
+  margin-bottom: 2px;
 }
 
 .verified-badge-small {
@@ -433,6 +447,7 @@ body {
 .star-rating {
   display: flex;
   gap: 2px;
+  flex-wrap: wrap;
 }
 
 .star-filled { color: #ffb700; }
@@ -489,6 +504,7 @@ body {
 .engagement-stats {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .stat-btn {
@@ -548,6 +564,8 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .comment-header strong {
@@ -562,6 +580,51 @@ body {
 .comment p {
   color: #4b5563;
   line-height: 1.5;
+}
+
+/* Add Comment Form */
+.add-comment {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comment-input,
+.comment-textarea {
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  width: 100%;
+}
+
+.comment-input:focus,
+.comment-textarea:focus {
+  outline: none;
+  border-color: #00b67a;
+}
+
+.comment-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.comment-submit {
+  background: #00b67a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.2s;
+}
+
+.comment-submit:hover {
+  background: #009e68;
 }
 
 /* Sidebar */
@@ -635,6 +698,12 @@ body {
   color: #00b67a;
   text-decoration: none;
   font-weight: 600;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.ad-link:hover {
+  text-decoration: underline;
 }
 
 /* Stats Card */
@@ -716,6 +785,7 @@ body {
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .popular-content {
@@ -726,6 +796,7 @@ body {
   font-size: 0.95rem;
   margin-bottom: 4px;
   color: #1a2639;
+  font-weight: 600;
 }
 
 .popular-content p {
@@ -805,6 +876,14 @@ body {
   font-size: 1.3rem;
   cursor: pointer;
   color: #6b7280;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: #00b67a;
 }
 
 .modal-content h2 {
@@ -845,6 +924,7 @@ body {
 .rating-selector {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .rating-star {
@@ -852,15 +932,21 @@ body {
   color: #d1d5db;
   cursor: pointer;
   transition: color 0.2s;
+  display: inline-block;
 }
 
 .rating-star.selected {
   color: #ffb700;
 }
 
+.rating-star:hover {
+  color: #ffb700;
+}
+
 .category-selector {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .add-category-btn {
@@ -871,6 +957,11 @@ body {
   border-radius: 8px;
   cursor: pointer;
   white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.add-category-btn:hover {
+  background: #009e68;
 }
 
 .selected-categories {
@@ -897,6 +988,13 @@ body {
   color: #6b7280;
   font-size: 1.1rem;
   margin-left: 4px;
+  padding: 0 2px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.category-tag button:hover {
+  color: #c5283d;
 }
 
 .submit-message {
@@ -914,6 +1012,7 @@ body {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .cancel-btn {
@@ -923,6 +1022,11 @@ body {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #f3f4f6;
 }
 
 .submit-btn {
@@ -933,10 +1037,12 @@ body {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
 .submit-btn:hover {
   background: #009e68;
+  transform: translateY(-2px);
 }
 
 /* No Results */
@@ -951,6 +1057,12 @@ body {
   font-size: 3rem;
   color: #f59e0b;
   margin-bottom: 16px;
+}
+
+.no-results h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: #1a2639;
 }
 
 /* Load More */
@@ -1006,18 +1118,35 @@ body {
   font-size: 0.9rem;
 }
 
+/* Footer Links - Updated for button elements */
 .footer-links {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-.footer-links a {
+.footer-link {
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: #00b67a;
+}
+
+.footer-links a.footer-link {
   color: #cbd5e1;
   text-decoration: none;
-  transition: color 0.2s;
 }
 
-.footer-links a:hover {
+.footer-links a.footer-link:hover {
   color: #00b67a;
 }
 
@@ -1057,6 +1186,10 @@ body {
     align-items: flex-start;
   }
   
+  .news-nav {
+    gap: 15px;
+  }
+  
   .filter-grid {
     grid-template-columns: 1fr;
   }
@@ -1086,7 +1219,6 @@ body {
   }
   
   .footer-links {
-    flex-wrap: wrap;
     justify-content: center;
   }
 }
@@ -1120,6 +1252,10 @@ body {
   
   .cancel-btn,
   .submit-btn {
+    width: 100%;
+  }
+  
+  .comment-submit {
     width: 100%;
   }
 }

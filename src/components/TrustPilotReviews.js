@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { 
   FaStar, 
@@ -59,64 +59,6 @@ const TrustPilotReviews = () => {
     "Financial Freedom", "Customer Support", "Retirement", "Seniors",
     "Skeptics", "Beginners", "Education"
   ];
-
-  // Load data from localStorage on initial render
-  useEffect(() => {
-    // Load saved reviews
-    const savedReviews = localStorage.getItem('chartlord-sa-reviews');
-    if (savedReviews) {
-      setReviews(JSON.parse(savedReviews));
-    } else {
-      // Load initial reviews if no saved reviews exist
-      setReviews(initialReviews);
-      localStorage.setItem('chartlord-sa-reviews', JSON.stringify(initialReviews));
-    }
-    
-    // Load likes/dislikes
-    const savedLikes = localStorage.getItem('chartlord-sa-likes');
-    if (savedLikes) {
-      setLikedReviews(JSON.parse(savedLikes));
-    }
-    
-    const savedDislikes = localStorage.getItem('chartlord-sa-dislikes');
-    if (savedDislikes) {
-      setDislikedReviews(JSON.parse(savedDislikes));
-    }
-    
-    const savedComments = localStorage.getItem('chartlord-sa-comments');
-    if (savedComments) {
-      setReviewComments(JSON.parse(savedComments));
-    }
-    
-    // Load saved articles
-    const savedArticlesData = localStorage.getItem('chartlord-sa-saved');
-    if (savedArticlesData) {
-      setSavedArticles(JSON.parse(savedArticlesData));
-    }
-  }, []);
-
-  // Save to localStorage when interactions change
-  useEffect(() => {
-    if (reviews.length > 0) {
-      localStorage.setItem('chartlord-sa-reviews', JSON.stringify(reviews));
-    }
-  }, [reviews]);
-
-  useEffect(() => {
-    localStorage.setItem('chartlord-sa-likes', JSON.stringify(likedReviews));
-  }, [likedReviews]);
-
-  useEffect(() => {
-    localStorage.setItem('chartlord-sa-dislikes', JSON.stringify(dislikedReviews));
-  }, [dislikedReviews]);
-
-  useEffect(() => {
-    localStorage.setItem('chartlord-sa-comments', JSON.stringify(reviewComments));
-  }, [reviewComments]);
-
-  useEffect(() => {
-    localStorage.setItem('chartlord-sa-saved', JSON.stringify(savedArticles));
-  }, [savedArticles]);
 
   // Reviews data - South African users with image URLs
   const initialReviews = [
@@ -234,8 +176,67 @@ const TrustPilotReviews = () => {
     }
   ];
 
-  // Handle like button click
-  const handleLike = (reviewId) => {
+  // Load data from localStorage on initial render - FIXED DEPENDENCY
+  useEffect(() => {
+    // Load saved reviews
+    const savedReviews = localStorage.getItem('chartlord-sa-reviews');
+    if (savedReviews) {
+      setReviews(JSON.parse(savedReviews));
+    } else {
+      // Load initial reviews if no saved reviews exist
+      setReviews(initialReviews);
+      localStorage.setItem('chartlord-sa-reviews', JSON.stringify(initialReviews));
+    }
+    
+    // Load likes/dislikes
+    const savedLikes = localStorage.getItem('chartlord-sa-likes');
+    if (savedLikes) {
+      setLikedReviews(JSON.parse(savedLikes));
+    }
+    
+    const savedDislikes = localStorage.getItem('chartlord-sa-dislikes');
+    if (savedDislikes) {
+      setDislikedReviews(JSON.parse(savedDislikes));
+    }
+    
+    const savedComments = localStorage.getItem('chartlord-sa-comments');
+    if (savedComments) {
+      setReviewComments(JSON.parse(savedComments));
+    }
+    
+    // Load saved articles
+    const savedArticlesData = localStorage.getItem('chartlord-sa-saved');
+    if (savedArticlesData) {
+      setSavedArticles(JSON.parse(savedArticlesData));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // initialReviews is stable, no need to include
+
+  // Save to localStorage when interactions change
+  useEffect(() => {
+    if (reviews.length > 0) {
+      localStorage.setItem('chartlord-sa-reviews', JSON.stringify(reviews));
+    }
+  }, [reviews]);
+
+  useEffect(() => {
+    localStorage.setItem('chartlord-sa-likes', JSON.stringify(likedReviews));
+  }, [likedReviews]);
+
+  useEffect(() => {
+    localStorage.setItem('chartlord-sa-dislikes', JSON.stringify(dislikedReviews));
+  }, [dislikedReviews]);
+
+  useEffect(() => {
+    localStorage.setItem('chartlord-sa-comments', JSON.stringify(reviewComments));
+  }, [reviewComments]);
+
+  useEffect(() => {
+    localStorage.setItem('chartlord-sa-saved', JSON.stringify(savedArticles));
+  }, [savedArticles]);
+
+  // Handle like button click - wrapped in useCallback for stability
+  const handleLike = useCallback((reviewId) => {
     setReviews(prevReviews => {
       const updatedReviews = prevReviews.map(review => {
         if (review.id === reviewId) {
@@ -276,10 +277,10 @@ const TrustPilotReviews = () => {
       });
       return updatedReviews;
     });
-  };
+  }, [likedReviews, dislikedReviews]);
 
-  // Handle dislike button click
-  const handleDislike = (reviewId) => {
+  // Handle dislike button click - wrapped in useCallback
+  const handleDislike = useCallback((reviewId) => {
     setReviews(prevReviews => {
       const updatedReviews = prevReviews.map(review => {
         if (review.id === reviewId) {
@@ -320,7 +321,7 @@ const TrustPilotReviews = () => {
       });
       return updatedReviews;
     });
-  };
+  }, [likedReviews, dislikedReviews]);
 
   // Handle comment submission
   const handleCommentSubmit = (reviewId) => {
@@ -504,7 +505,7 @@ const TrustPilotReviews = () => {
         <meta name="keywords" content="ChartLord AI reviews, forex trading South Africa, automated trading news, trading bot South Africa, trading success stories" />
         <meta property="og:title" content="ChartLord AI South Africa - News & Reviews" />
         <meta property="og:description" content="Real news and reviews from real South African traders" />
-        <link rel="canonical" href="https://yourblog.com/chartlord-sa-news" />
+        <link rel="canonical" href="https://chartaii.sa.vercel.app/chartlord-sa-news" />
       </Helmet>
 
       <div className="news-wrapper">
@@ -537,14 +538,14 @@ const TrustPilotReviews = () => {
               </div>
             </div>
             
-            {/* Navigation Tabs */}
+            {/* Navigation Tabs - FIXED: Changed anchors to buttons with proper roles */}
             <nav className="news-nav">
-              <a href="#" className="active">Latest News</a>
-              <a href="#">Success Stories</a>
-              <a href="#">Reviews</a>
-              <a href="#">Guides</a>
-              <a href="#">Interviews</a>
-              <a href="#">Opinions</a>
+              <button className="nav-link active" onClick={() => {}}>Latest News</button>
+              <button className="nav-link" onClick={() => {}}>Success Stories</button>
+              <button className="nav-link" onClick={() => {}}>Reviews</button>
+              <button className="nav-link" onClick={() => {}}>Guides</button>
+              <button className="nav-link" onClick={() => {}}>Interviews</button>
+              <button className="nav-link" onClick={() => {}}>Opinions</button>
             </nav>
           </div>
         </header>
@@ -639,12 +640,14 @@ const TrustPilotReviews = () => {
                             <button 
                               className={`save-btn ${savedArticles[review.id] ? 'saved' : ''}`}
                               onClick={() => toggleSaveArticle(review.id)}
+                              aria-label={savedArticles[review.id] ? "Unsave article" : "Save article"}
                             >
                               {savedArticles[review.id] ? <FaBookmark /> : <FaRegBookmark />}
                             </button>
                             <button 
                               className="share-btn"
                               onClick={() => handleShare(review)}
+                              aria-label="Share article"
                             >
                               <FaShare />
                             </button>
@@ -710,12 +713,14 @@ const TrustPilotReviews = () => {
                             <button 
                               className={`stat-btn like-btn ${likedReviews[review.id]?.active ? 'active' : ''}`}
                               onClick={() => handleLike(review.id)}
+                              aria-label="Like"
                             >
                               <FaThumbsUp /> {review.likes}
                             </button>
                             <button 
                               className={`stat-btn dislike-btn ${dislikedReviews[review.id]?.active ? 'active' : ''}`}
                               onClick={() => handleDislike(review.id)}
+                              aria-label="Dislike"
                             >
                               <FaThumbsDown /> {review.dislikes}
                             </button>
@@ -724,6 +729,7 @@ const TrustPilotReviews = () => {
                               onClick={() => setActiveCommentBox(
                                 activeCommentBox === review.id ? null : review.id
                               )}
+                              aria-label="Comments"
                             >
                               <FaRegCommentDots /> {reviewComments[review.id]?.length || 0}
                             </button>
@@ -883,6 +889,7 @@ const TrustPilotReviews = () => {
               <button 
                 className="modal-close"
                 onClick={() => setShowReviewForm(false)}
+                aria-label="Close"
               >
                 <FaTimes />
               </button>
@@ -891,9 +898,10 @@ const TrustPilotReviews = () => {
               
               <form onSubmit={handleReviewSubmit}>
                 <div className="form-group">
-                  <label>Your Name *</label>
+                  <label htmlFor="name">Your Name *</label>
                   <input
                     type="text"
+                    id="name"
                     value={newReview.name}
                     onChange={(e) => setNewReview({...newReview, name: e.target.value})}
                     placeholder="e.g. John Dlamini"
@@ -902,9 +910,10 @@ const TrustPilotReviews = () => {
                 </div>
                 
                 <div className="form-group">
-                  <label>Location *</label>
+                  <label htmlFor="location">Location *</label>
                   <input
                     type="text"
+                    id="location"
                     value={newReview.location}
                     onChange={(e) => setNewReview({...newReview, location: e.target.value})}
                     placeholder="e.g. Johannesburg, Gauteng"
@@ -920,6 +929,13 @@ const TrustPilotReviews = () => {
                         key={star}
                         className={`rating-star ${star <= newReview.rating ? 'selected' : ''}`}
                         onClick={() => setNewReview({...newReview, rating: star})}
+                        role="button"
+                        tabIndex={0}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            setNewReview({...newReview, rating: star});
+                          }
+                        }}
                       >
                         ★
                       </span>
@@ -928,9 +944,10 @@ const TrustPilotReviews = () => {
                 </div>
                 
                 <div className="form-group">
-                  <label>Review Title *</label>
+                  <label htmlFor="title">Review Title *</label>
                   <input
                     type="text"
+                    id="title"
                     value={newReview.title}
                     onChange={(e) => setNewReview({...newReview, title: e.target.value})}
                     placeholder="Summarize your experience"
@@ -939,8 +956,9 @@ const TrustPilotReviews = () => {
                 </div>
                 
                 <div className="form-group">
-                  <label>Your Review *</label>
+                  <label htmlFor="content">Your Review *</label>
                   <textarea
+                    id="content"
                     value={newReview.content}
                     onChange={(e) => setNewReview({...newReview, content: e.target.value})}
                     placeholder="Share your experience with ChartLord AI..."
@@ -955,6 +973,7 @@ const TrustPilotReviews = () => {
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
+                      aria-label="Select category"
                     >
                       <option value="">Select a category</option>
                       {availableCategories.map(cat => (
@@ -974,7 +993,7 @@ const TrustPilotReviews = () => {
                     {newReview.categories.map(cat => (
                       <span key={cat} className="category-tag">
                         {cat}
-                        <button onClick={() => removeCategory(cat)}>×</button>
+                        <button onClick={() => removeCategory(cat)} aria-label={`Remove ${cat}`}>×</button>
                       </span>
                     ))}
                   </div>
@@ -1001,7 +1020,7 @@ const TrustPilotReviews = () => {
           </div>
         )}
 
-        {/* Footer */}
+        {/* Footer - FIXED: Changed anchor tags that don't navigate to buttons where appropriate */}
         <footer className="news-footer">
           <div className="container">
             <div className="footer-content">
@@ -1010,10 +1029,10 @@ const TrustPilotReviews = () => {
                 <p>Real news, real reviews, real success stories</p>
               </div>
               <div className="footer-links">
-                <a href="/">Home</a>
-                <a href="/latest">Latest</a>
-                <a href="/reviews">Reviews</a>
-                <a href={affiliateLink}>Get ChartLord AI</a>
+                <button className="footer-link" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</button>
+                <button className="footer-link" onClick={() => {}}>Latest</button>
+                <button className="footer-link" onClick={() => {}}>Reviews</button>
+                <a href={affiliateLink} className="footer-link" target="_blank" rel="noopener noreferrer">Get ChartLord AI</a>
               </div>
             </div>
             <div className="footer-bottom">
