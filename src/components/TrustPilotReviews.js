@@ -554,7 +554,7 @@ const TrustPilotReviews = () => {
         <meta name="keywords" content="ChartLord AI" />
         <meta property="og:title" content="ChartLord AI" />
         <meta property="og:description" content="Chartload AI" />
-        <link rel="canonical" href="https://chartaii.sa.vercel.app/chartlord-sa-news" />
+        <link rel="canonical" href="https://chartai-sa-reviews.vercel.app/" />
       </Helmet>
 
       <div className="news-wrapper">
