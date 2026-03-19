@@ -549,11 +549,11 @@ const TrustPilotReviews = () => {
   return (
     <>
       <Helmet>
-        <title>ChartLord AI News & Reviews | South African Traders Share Their Experiences</title>
-        <meta name="description" content="Latest news, reviews, and success stories from South African traders using ChartLord AI. Real experiences, honest feedback, and expert insights." />
-        <meta name="keywords" content="ChartLord AI reviews, forex trading South Africa, automated trading news, trading bot South Africa, trading success stories" />
-        <meta property="og:title" content="ChartLord AI South Africa - News & Reviews" />
-        <meta property="og:description" content="Real news and reviews from real South African traders" />
+        <title>ChartLord AI Review South Africa 2026 – Real Results, Is It Legit?</title>
+        <meta name="description" content="Chartload AI." />
+        <meta name="keywords" content="ChartLord AI" />
+        <meta property="og:title" content="ChartLord AI" />
+        <meta property="og:description" content="Chartload AI" />
         <link rel="canonical" href="https://chartaii.sa.vercel.app/chartlord-sa-news" />
       </Helmet>
 
