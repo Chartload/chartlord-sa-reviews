@@ -549,11 +549,11 @@ const TrustPilotReviews = () => {
   return (
     <>
       <Helmet>
-        <title>ChartLord AI Review South Africa 2026 – Real Results, Is It Legit?</title>
-        <meta name="description" content="Chartload AI." />
+        <title>ChartLord AI - South Africa 2026 – Real Results, Is It Legit?</title>
+        <meta name="description" content="Chartlord AI." />
         <meta name="keywords" content="ChartLord AI" />
         <meta property="og:title" content="ChartLord AI" />
-        <meta property="og:description" content="Chartload AI" />
+        <meta property="og:description" content="Chartlord AI" />
         <link rel="canonical" href="https://chartai-sa-reviews.vercel.app/" />
       </Helmet>
 
