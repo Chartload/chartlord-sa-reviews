@@ -16,7 +16,7 @@ import {
   FaAd,
   FaNewspaper
 } from 'react-icons/fa';
-import './TrustPilotReviews.css';
+import './Chartlordai.css';
 
 const TrustPilotReviews = () => {
   const affiliateLink = "https://chartlordai.com/?ref=mrxw4yhbhrco";

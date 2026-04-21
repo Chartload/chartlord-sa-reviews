@@ -1,6 +1,6 @@
 import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import TrustPilotReviews from './components/TrustPilotReviews';
+import Chartlordai from './components/Chartlordai';
 import './App.css';
 
 function App() {
